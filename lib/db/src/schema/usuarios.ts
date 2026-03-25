@@ -8,6 +8,9 @@ export const usuariosTable = pgTable("usuarios", {
   email: text("email").notNull().unique(),
   senha: text("senha").notNull(),
   iniciais: text("iniciais").notNull(),
+  papel: text("papel").notNull().default("aluno"),
+  matricula: text("matricula"),
+  turma: text("turma"),
   criadoEm: timestamp("criado_em").defaultNow().notNull(),
 });
 
