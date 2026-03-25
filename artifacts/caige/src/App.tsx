@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function ProtectedRoute({ component: Component, ...rest }: any) {
+function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
@@ -35,34 +35,34 @@ function ProtectedRoute({ component: Component, ...rest }: any) {
   }, [isLoading, user, setLocation]);
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
-  return <Component {...rest} />;
+  return (
+    <AppLayout>
+      <Component />
+    </AppLayout>
+  );
 }
 
 function MainRouter() {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <Route path="/">
-        <AppLayout>
-          <Switch>
-            <Route path="/" component={() => <ProtectedRoute component={Dashboard} />} />
-            <Route path="/idosos" component={() => <ProtectedRoute component={IdososList} />} />
-            <Route path="/idosos/novo" component={() => <ProtectedRoute component={IdosoForm} />} />
-            <Route path="/idosos/:id" component={() => <ProtectedRoute component={IdosoPerfil} />} />
-            <Route path="/idosos/:id/editar" component={() => <ProtectedRoute component={IdosoForm} />} />
-            <Route path="/prontuarios" component={() => <ProtectedRoute component={ProntuariosList} />} />
-            <Route path="/busca" component={() => <ProtectedRoute component={Busca} />} />
-            <Route component={NotFound} />
-          </Switch>
-        </AppLayout>
-      </Route>
+      <Route path="/idosos/novo" component={() => <ProtectedRoute component={IdosoForm} />} />
+      <Route path="/idosos/:id/editar" component={() => <ProtectedRoute component={IdosoForm} />} />
+      <Route path="/idosos/:id" component={() => <ProtectedRoute component={IdosoPerfil} />} />
+      <Route path="/idosos" component={() => <ProtectedRoute component={IdososList} />} />
+      <Route path="/prontuarios" component={() => <ProtectedRoute component={ProntuariosList} />} />
+      <Route path="/busca" component={() => <ProtectedRoute component={Busca} />} />
+      <Route path="/" component={() => <ProtectedRoute component={Dashboard} />} />
+      <Route component={NotFound} />
     </Switch>
   );
 }
