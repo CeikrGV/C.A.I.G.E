@@ -1,22 +1,28 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: CAIGE - Sistema de Gestão de Idosos API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication
+  - name: idosos
+    description: Elderly people management
+  - name: prontuarios
+    description: Medical records
+  - name: dashboard
+    description: Dashboard statistics
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,295 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthUser"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthUser"
+        "401":
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /idosos:
+    get:
+      operationId: listIdosos
+      tags: [idosos]
+      summary: List all elderly people
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ativo, inativo]
+      responses:
+        "200":
+          description: List of elderly
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Idoso"
+    post:
+      operationId: createIdoso
+      tags: [idosos]
+      summary: Register new elderly person
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIdosoRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Idoso"
+
+  /idosos/{id}:
+    get:
+      operationId: getIdoso
+      tags: [idosos]
+      summary: Get elderly person by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Elderly person
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Idoso"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: updateIdoso
+      tags: [idosos]
+      summary: Update elderly person
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateIdosoRequest"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Idoso"
+    delete:
+      operationId: deleteIdoso
+      tags: [idosos]
+      summary: Delete elderly person
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /prontuarios:
+    get:
+      operationId: listProntuarios
+      tags: [prontuarios]
+      summary: List medical records
+      parameters:
+        - name: idosoId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Prontuario"
+    post:
+      operationId: createProntuario
+      tags: [prontuarios]
+      summary: Create medical record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProntuarioRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prontuario"
+
+  /prontuarios/{id}:
+    get:
+      operationId: getProntuario
+      tags: [prontuarios]
+      summary: Get medical record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Medical record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prontuario"
+    put:
+      operationId: updateProntuario
+      tags: [prontuarios]
+      summary: Update medical record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProntuarioRequest"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prontuario"
+    delete:
+      operationId: deleteProntuario
+      tags: [prontuarios]
+      summary: Delete medical record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get dashboard statistics
+      responses:
+        "200":
+          description: Dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /dashboard/activities:
+    get:
+      operationId: getDashboardActivities
+      tags: [dashboard]
+      summary: Get recent activities
+      responses:
+        "200":
+          description: Recent activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +326,269 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required: [success]
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        senha:
+          type: string
+      required: [email, senha]
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+        iniciais:
+          type: string
+      required: [id, nome, email, iniciais]
+
+    Idoso:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        idade:
+          type: integer
+        dataNascimento:
+          type: string
+        sexo:
+          type: string
+          enum: [masculino, feminino]
+        cpf:
+          type: string
+        telefone:
+          type: string
+        bairro:
+          type: string
+        rua:
+          type: string
+        numero:
+          type: string
+        cidade:
+          type: string
+        estado:
+          type: string
+        cep:
+          type: string
+        status:
+          type: string
+          enum: [ativo, inativo]
+        responsavelNome:
+          type: string
+        responsavelTelefone:
+          type: string
+        responsavelParentesco:
+          type: string
+        observacoes:
+          type: string
+          nullable: true
+        cadastro:
+          type: string
+        iniciais:
+          type: string
+      required:
+        - id
+        - nome
+        - idade
+        - dataNascimento
+        - sexo
+        - cpf
+        - telefone
+        - bairro
+        - rua
+        - numero
+        - cidade
+        - estado
+        - cep
+        - status
+        - responsavelNome
+        - responsavelTelefone
+        - responsavelParentesco
+        - cadastro
+        - iniciais
+
+    CreateIdosoRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        dataNascimento:
+          type: string
+        sexo:
+          type: string
+          enum: [masculino, feminino]
+        cpf:
+          type: string
+        telefone:
+          type: string
+        bairro:
+          type: string
+        rua:
+          type: string
+        numero:
+          type: string
+        cidade:
+          type: string
+        estado:
+          type: string
+        cep:
+          type: string
+        status:
+          type: string
+          enum: [ativo, inativo]
+        responsavelNome:
+          type: string
+        responsavelTelefone:
+          type: string
+        responsavelParentesco:
+          type: string
+        observacoes:
+          type: string
+          nullable: true
+      required:
+        - nome
+        - dataNascimento
+        - sexo
+        - cpf
+        - telefone
+        - bairro
+        - rua
+        - numero
+        - cidade
+        - estado
+        - cep
+        - status
+        - responsavelNome
+        - responsavelTelefone
+        - responsavelParentesco
+
+    Prontuario:
+      type: object
+      properties:
+        id:
+          type: integer
+        idosoId:
+          type: integer
+        idosoNome:
+          type: string
+        tipo:
+          type: string
+        descricao:
+          type: string
+        responsavel:
+          type: string
+        data:
+          type: string
+        hora:
+          type: string
+        observacoes:
+          type: string
+          nullable: true
+      required:
+        - id
+        - idosoId
+        - idosoNome
+        - tipo
+        - descricao
+        - responsavel
+        - data
+        - hora
+
+    CreateProntuarioRequest:
+      type: object
+      properties:
+        idosoId:
+          type: integer
+        tipo:
+          type: string
+        descricao:
+          type: string
+        responsavel:
+          type: string
+        data:
+          type: string
+        hora:
+          type: string
+        observacoes:
+          type: string
+          nullable: true
+      required:
+        - idosoId
+        - tipo
+        - descricao
+        - responsavel
+        - data
+        - hora
+
+    DashboardStats:
+      type: object
+      properties:
+        totalIdosos:
+          type: integer
+        profissionaisEnvolvidos:
+          type: integer
+        atendimentosEmAndamento:
+          type: integer
+        atendimentosHoje:
+          type: integer
+        atendimentosSemana:
+          type: integer
+        atendimentosMes:
+          type: integer
+        satisfacao:
+          type: integer
+      required:
+        - totalIdosos
+        - profissionaisEnvolvidos
+        - atendimentosEmAndamento
+        - atendimentosHoje
+        - atendimentosSemana
+        - atendimentosMes
+        - satisfacao
+
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+        data:
+          type: string
+        hora:
+          type: string
+        tipo:
+          type: string
+        descricao:
+          type: string
+        responsavel:
+          type: string
+      required:
+        - id
+        - data
+        - hora
+        - tipo
+        - descricao
+        - responsavel

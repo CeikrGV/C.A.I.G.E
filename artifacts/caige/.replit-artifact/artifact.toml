@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "CAIGE - Sistema de Gestão de Idosos"
+version = "1.0.0"
+id = "artifacts/caige"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23752
+
+[services.development]
+run = "pnpm --filter @workspace/caige run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/caige", "run", "build" ]
+publicDir = "artifacts/caige/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23752"
+BASE_PATH = "/"

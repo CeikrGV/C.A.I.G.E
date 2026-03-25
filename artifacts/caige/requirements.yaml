@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For premium page transitions, micro-interactions, and modal animations"
+  "date-fns": "For beautiful and localized date formatting in the dashboard and records"
+  "react-hook-form": "For robust form state management in the complex patient registration form"
+  "@hookform/resolvers": "For Zod schema validation integration with react-hook-form"
+  "clsx": "For conditional class name joining"
+  "tailwind-merge": "For merging tailwind utility classes safely in custom components"
+
+images:
+  - path: "artifacts/caige/public/images/caige-bg.png"
+    description: "Black and white portrait photography of a smiling female healthcare worker gently holding hands with an elderly woman, professional medical setting, high quality, optimistic, caring, soft lighting"
+    aspect_ratio: "3:4"
+  - path: "artifacts/caige/public/images/logo-caige.png"
+    description: "Modern minimalist circular multicolor icon logo, abstract people holding hands in a star shape, healthcare and community concept, clean white background, vibrant colors"
+    aspect_ratio: "1:1"
+
+notes:
+  - "The API client is assumed to be fully generated in @workspace/api-client-react and functioning."
+  - "Auth is managed locally via React Context + localStorage to ensure immediate feedback and fallback stability."
+  - "All routing uses wouter with proper base path handling."

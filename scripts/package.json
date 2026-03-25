@@ -11,5 +11,8 @@
     "@types/node": "catalog:",
     "sharp": "^0.34.5",
     "tsx": "catalog:"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16"
   }
 }

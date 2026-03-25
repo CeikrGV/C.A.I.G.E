@@ -48,6 +48,15 @@ Every package extends `tsconfig.base.json` which sets `composite: true`. The roo
 - `pnpm run build` — runs `typecheck` first, then recursively runs `build` in all packages that define it
 - `pnpm run typecheck` — runs `tsc --build --emitDeclarationOnly` using project references
 
+## CAIGE App
+
+Sistema de Gestão de Idosos do CAIGE/Univale. Recriado a partir do design Figma.
+
+- **Login**: `caige@univale.br` / `caige123`
+- **Páginas**: Login, Dashboard, Idosos Cadastrados, Perfil do Idoso, Prontuários, Novo Cadastro, Editar, Busca
+- **Artefato**: `artifacts/caige/` - React + Vite, servido em `/`
+- **Dados de exemplo**: 3 idosos cadastrados (Maria, Nelson, Erick) + prontuários
+
 ## Packages
 
 ### `artifacts/api-server` (`@workspace/api-server`)
