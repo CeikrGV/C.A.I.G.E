@@ -1,10 +1,10 @@
 import { useAuth } from "@/hooks/use-auth";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, LogOut, Shield, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Header() {
-  const { user, logout } = useAuth();
+  const { user, logout, isProfessor } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -36,6 +36,10 @@ export function Header() {
               <div className="p-3 border-b border-slate-50">
                 <p className="font-medium text-slate-900 truncate">{user?.nome}</p>
                 <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                <span className={`inline-flex items-center gap-1 mt-1.5 text-xs font-bold px-2 py-0.5 rounded-full ${isProfessor ? "bg-purple-100 text-purple-700" : "bg-blue-100 text-blue-700"}`}>
+                  {isProfessor ? <Shield className="w-3 h-3" /> : <GraduationCap className="w-3 h-3" />}
+                  {isProfessor ? "Professor" : "Aluno"}
+                </span>
               </div>
               <button 
                 onClick={logout}

@@ -1,12 +1,25 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import type { AuthUser, LoginRequest } from "@workspace/api-client-react";
+import type { LoginRequest } from "@workspace/api-client-react";
 import { login as apiLogin, logout as apiLogout, getMe } from "@workspace/api-client-react";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
+export interface AuthUser {
+  id: number;
+  nome: string;
+  email: string;
+  iniciais: string;
+  papel: "professor" | "aluno";
+  matricula?: string | null;
+  turma?: string | null;
+}
+
 interface AuthContextType {
   user: AuthUser | null;
   isLoading: boolean;
+  isProfessor: boolean;
+  isAluno: boolean;
+  canEdit: boolean;
   login: (credentials: LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -26,12 +39,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (storedUser) {
           setUser(JSON.parse(storedUser));
         } else {
-          // Attempt to fetch from API if not in local storage
           const data = await getMe();
-          setUser(data);
+          setUser(data as AuthUser);
           localStorage.setItem("caige_user", JSON.stringify(data));
         }
-      } catch (error) {
+      } catch {
         setUser(null);
         localStorage.removeItem("caige_user");
       } finally {
@@ -44,34 +56,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (credentials: LoginRequest) => {
     try {
       const data = await apiLogin(credentials);
-      setUser(data);
-      localStorage.setItem("caige_user", JSON.stringify(data));
-      toast({ title: "Bem-vindo ao CAIGE!", description: `Olá, ${data.nome}` });
+      const u = data as AuthUser;
+      setUser(u);
+      localStorage.setItem("caige_user", JSON.stringify(u));
+      toast({ title: "Bem-vindo ao CAIGE!", description: `Olá, ${u.nome}` });
       setLocation("/");
-    } catch (error) {
-      toast({ 
-        title: "Erro ao fazer login", 
-        description: "Verifique suas credenciais e tente novamente.", 
-        variant: "destructive" 
-      });
-      throw error;
+    } catch {
+      toast({ title: "Erro ao fazer login", description: "Verifique suas credenciais.", variant: "destructive" });
+      throw new Error("Login failed");
     }
   };
 
   const logout = async () => {
-    try {
-      await apiLogout();
-    } catch (error) {
-      console.error("Logout API failed, continuing local logout");
-    } finally {
-      setUser(null);
-      localStorage.removeItem("caige_user");
-      setLocation("/login");
-    }
+    try { await apiLogout(); } catch { /* ignore */ }
+    setUser(null);
+    localStorage.removeItem("caige_user");
+    setLocation("/login");
   };
 
+  const isProfessor = user?.papel === "professor";
+  const isAluno = user?.papel === "aluno";
+  const canEdit = isProfessor;
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, isProfessor, isAluno, canEdit, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -79,8 +87,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 }

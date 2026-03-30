@@ -14,25 +14,23 @@ import IdosoPerfil from "@/pages/IdosoPerfil";
 import IdosoForm from "@/pages/IdosoForm";
 import ProntuariosList from "@/pages/Prontuarios";
 import Busca from "@/pages/Busca";
+import Agenda from "@/pages/Agenda";
+import Frequencia from "@/pages/Frequencia";
+import Desempenho from "@/pages/Desempenho";
+import GerenciarAlunos from "@/pages/GerenciarAlunos";
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
+  defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
 });
 
-function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
-  const { user, isLoading } = useAuth();
+function ProtectedRoute({ component: Component, professorOnly = false }: { component: React.ComponentType; professorOnly?: boolean }) {
+  const { user, isLoading, isProfessor } = useAuth();
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      setLocation("/login");
-    }
-  }, [isLoading, user, setLocation]);
+    if (!isLoading && !user) setLocation("/login");
+    if (!isLoading && user && professorOnly && !isProfessor) setLocation("/");
+  }, [isLoading, user, isProfessor, setLocation, professorOnly]);
 
   if (isLoading) {
     return (
@@ -43,6 +41,7 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   }
 
   if (!user) return null;
+  if (professorOnly && !isProfessor) return null;
 
   return (
     <AppLayout>
@@ -56,10 +55,14 @@ function MainRouter() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/idosos/novo" component={() => <ProtectedRoute component={IdosoForm} />} />
-      <Route path="/idosos/:id/editar" component={() => <ProtectedRoute component={IdosoForm} />} />
+      <Route path="/idosos/:id/editar" component={() => <ProtectedRoute component={IdosoForm} professorOnly />} />
       <Route path="/idosos/:id" component={() => <ProtectedRoute component={IdosoPerfil} />} />
       <Route path="/idosos" component={() => <ProtectedRoute component={IdososList} />} />
       <Route path="/prontuarios" component={() => <ProtectedRoute component={ProntuariosList} />} />
+      <Route path="/agenda" component={() => <ProtectedRoute component={Agenda} />} />
+      <Route path="/frequencia" component={() => <ProtectedRoute component={Frequencia} />} />
+      <Route path="/desempenho" component={() => <ProtectedRoute component={Desempenho} />} />
+      <Route path="/alunos" component={() => <ProtectedRoute component={GerenciarAlunos} professorOnly />} />
       <Route path="/busca" component={() => <ProtectedRoute component={Busca} />} />
       <Route path="/" component={() => <ProtectedRoute component={Dashboard} />} />
       <Route component={NotFound} />
