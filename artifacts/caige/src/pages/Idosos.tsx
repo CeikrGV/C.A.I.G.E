@@ -19,12 +19,12 @@ export default function IdososList() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Idosos Cadastrados</h1>
-          <p className="text-slate-500 mt-1">Gerencie e visualize os dados cadastrais dos idosos</p>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Pacientes Cadastrados</h1>
+          <p className="text-slate-500 mt-1">Gerencie e visualize os dados cadastrais dos pacientes</p>
         </div>
         <Link href="/idosos/novo" className="inline-flex">
           <Button className="gap-2 shadow-lg shadow-blue-500/25">
-            <Plus className="w-5 h-5" /> Cadastrar Idoso
+            <Plus className="w-5 h-5" /> Cadastrar Paciente
           </Button>
         </Link>
       </div>
@@ -34,7 +34,7 @@ export default function IdososList() {
           Todos os pacientes <ChevronDown className="w-4 h-4 text-slate-400" />
         </button>
         <div className="flex items-center gap-2 text-sm text-slate-600 font-medium px-4">
-          <UsersIcon className="w-4 h-4" /> {items.length} idosos cadastrados
+          <UsersIcon className="w-4 h-4" /> {items.length} pacientes cadastrados
         </div>
       </div>
 
