@@ -45,7 +45,7 @@ export default function Desempenho() {
     try {
       if (isProfessor) {
         const result = await api.get("/desempenho");
-        setDados(result);
+        setDados(Array.isArray(result) ? result : []);
       } else {
         const result = await api.get(`/desempenho/${user?.id}`);
         setMeuDesempenho(result);
@@ -110,13 +110,13 @@ export default function Desempenho() {
             </div>
           </CardContent>
         </Card>
-        {Object.keys(d.tiposAtendimento).length > 0 && (
+        {Object.keys(d.tiposAtendimento ?? {}).length > 0 && (
           <Card>
             <CardHeader className="border-b border-slate-100"><CardTitle className="flex items-center gap-2"><FileText className="w-5 h-5 text-primary" />Atendimentos por Tipo</CardTitle></CardHeader>
             <CardContent className="p-6">
               <div className="space-y-3">
-                {Object.entries(d.tiposAtendimento as Record<string, number>).map(([tipo, qtd]) => {
-                  const max = Math.max(...Object.values(d.tiposAtendimento as Record<string, number>));
+                {Object.entries((d.tiposAtendimento ?? {}) as Record<string, number>).map(([tipo, qtd]) => {
+                  const max = Math.max(...Object.values((d.tiposAtendimento ?? {}) as Record<string, number>));
                   return (
                     <div key={tipo} className="flex items-center gap-3">
                       <div className="w-32 text-sm text-slate-600 font-medium shrink-0">{tipo}</div>

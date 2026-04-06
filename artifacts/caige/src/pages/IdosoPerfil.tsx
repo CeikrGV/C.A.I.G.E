@@ -49,7 +49,7 @@ export default function IdosoPerfil() {
   async function loadEvolucoes() {
     try {
       const evols = await api.get(`/evolucoes?idosoId=${id}`);
-      setEvolucoes(evols);
+      setEvolucoes(Array.isArray(evols) ? evols : []);
     } catch { /* silently fail */ }
   }
 

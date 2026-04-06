@@ -19,16 +19,17 @@ export default function Dashboard() {
     </div>;
   }
 
-  // Fallback data if API returns empty
-  const s = stats || {
-    totalIdosos: 3, profissionaisEnvolvidos: 1, atendimentosEmAndamento: 3,
-    atendimentosHoje: 8, atendimentosSemana: 35, atendimentosMes: 142, satisfacao: 95
+  const s = stats ?? {
+    totalIdosos: 0,
+    profissionaisEnvolvidos: 0,
+    atendimentosEmAndamento: 0,
+    atendimentosHoje: 0,
+    atendimentosSemana: 0,
+    atendimentosMes: 0,
+    satisfacao: 0,
   };
 
-  const a = activities || [
-    { id: 1, data: "2025-09-25", hora: "14:30", tipo: "Novo Cadastro", descricao: "Maria Silva - Primeira consulta agendada", responsavel: "Dra. Ana Co..." },
-    { id: 2, data: "2025-09-22", hora: "10:30", tipo: "Anexo Prontuário", descricao: "Nelson Osvaldo - Documento anexado", responsavel: "Dra. Maria S..." }
-  ];
+  const a = Array.isArray(activities) ? activities : [];
 
   return (
     <div className="space-y-8">
@@ -108,7 +109,7 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
-                  {a.map((item) => (
+                  {(a || []).map((item) => (
                     <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="font-medium text-slate-900">

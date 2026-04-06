@@ -39,7 +39,8 @@ export default function GerenciarAlunos() {
     setIsLoading(true);
     try {
       const data = await api.get("/usuarios");
-      setUsuarios(data.filter((u: Usuario) => u.id !== user?.id));
+      const safeUsers = Array.isArray(data) ? data : [];
+      setUsuarios(safeUsers.filter((u: Usuario) => u.id !== user?.id));
     } catch {
       toast({ title: "Erro ao carregar usuários", variant: "destructive" });
     } finally {

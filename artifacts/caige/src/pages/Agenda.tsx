@@ -58,9 +58,10 @@ export default function Agenda() {
         api.get("/idosos"),
         isProfessor ? api.get("/usuarios") : Promise.resolve([]),
       ]);
-      setAgendamentos(agends);
-      setIdosos(idos);
-      setAlunos(users.filter((u: any) => u.papel === "aluno"));
+      setAgendamentos(Array.isArray(agends) ? agends : []);
+      setIdosos(Array.isArray(idos) ? idos : []);
+      const safeUsers = Array.isArray(users) ? users : [];
+      setAlunos(safeUsers.filter((u: any) => u.papel === "aluno"));
     } catch {
       toast({ title: "Erro ao carregar dados", variant: "destructive" });
     } finally {

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "hello": "tsx ./src/hello.ts",
+    "seed:backup": "tsx ./src/seed-backup.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
@@ -13,6 +14,8 @@
     "tsx": "catalog:"
   },
   "dependencies": {
+    "drizzle-orm": "catalog:",
+    "@workspace/db": "workspace:*",
     "adm-zip": "^0.5.16"
   }
 }

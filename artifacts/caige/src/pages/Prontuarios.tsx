@@ -25,7 +25,7 @@ export default function ProntuariosList() {
   });
 
   // Mock data for display if API empty
-  const items = prontuarios?.length ? prontuarios : [
+  const items = Array.isArray(prontuarios) && prontuarios.length ? prontuarios : [
     { id: 1, idosoId: 1, idosoNome: "Nelson Osvaldo Diego", tipo: "Consulta Médica", descricao: "Acompanhamento de rotina de hipertensão. Pressão estável.", responsavel: "Dra. Maria", data: "2025-09-22", hora: "10:30" },
     { id: 2, idosoId: 2, idosoNome: "Maria da Silva Santos", tipo: "Fisioterapia", descricao: "Exercícios motores membros inferiores.", responsavel: "Dr. Carlos", data: "2025-09-25", hora: "14:30" },
   ];

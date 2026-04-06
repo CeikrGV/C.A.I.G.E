@@ -8,12 +8,7 @@ import { formatPhone } from "@/lib/utils";
 export default function IdososList() {
   const { data: idosos, isLoading } = useListIdosos();
 
-  // Fallback for visual demo if API empty
-  const items = idosos?.length ? idosos : [
-    { id: 1, nome: "Maria da Silva Santos", iniciais: "MS", idade: 70, telefone: "33991234567", bairro: "Jardim Alice" },
-    { id: 2, nome: "Nelson Osvaldo Diego", iniciais: "NO", idade: 75, telefone: "33999760825", bairro: "Serraria" },
-    { id: 3, nome: "Erick Henrique Soares", iniciais: "EH", idade: 77, telefone: "339984194218", bairro: "Alvorecer" },
-  ];
+  const items = Array.isArray(idosos) ? idosos : [];
 
   return (
     <div className="space-y-6">
@@ -41,6 +36,10 @@ export default function IdososList() {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {[1,2,3].map(i => <div key={i} className="h-48 bg-slate-200 animate-pulse rounded-2xl"></div>)}
+        </div>
+      ) : items.length === 0 ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500">
+          Nenhum paciente encontrado.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

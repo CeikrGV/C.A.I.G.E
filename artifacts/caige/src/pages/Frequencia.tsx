@@ -48,8 +48,9 @@ export default function Frequencia() {
         api.get(`/frequencias${params}`),
         isProfessor ? api.get("/usuarios") : Promise.resolve([]),
       ]);
-      setFrequencias(freqs);
-      const alunosList = users.filter((u: any) => u.papel === "aluno");
+      setFrequencias(Array.isArray(freqs) ? freqs : []);
+      const safeUsers = Array.isArray(users) ? users : [];
+      const alunosList = safeUsers.filter((u: any) => u.papel === "aluno");
       setAlunos(alunosList);
       const initialPresencas: Record<number, boolean> = {};
       alunosList.forEach((a: Aluno) => { initialPresencas[a.id] = true; });
