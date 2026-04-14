@@ -1,0 +1,6 @@
+"id","nome","data_nascimento","sexo","cpf","telefone","bairro","rua","numero","cidade","estado","cep","status","responsavel_nome","responsavel_telefone","responsavel_parentesco","observacoes","criado_em"
+"4","Maria da Silva Santos","1954-03-15","F","111.222.333-44","33991234567","Jardim Alice","Rua das Flores","123","Governador Valadares","MG","35020-000","ativo","José Santos","33991234568","Filho",,"""2026-03-30T18:15:52.467Z"""
+"5","Nelson Osvaldo Diego","1949-07-22","M","222.333.444-55","33999760825","Serraria","Av. Principal","456","Governador Valadares","MG","35021-000","ativo","Clara Diego","33999760826","Filha",,"""2026-03-30T18:15:52.467Z"""
+"6","Erick Henrique Soares","1947-11-08","M","333.444.555-66","33998419421","Alvorecer","Rua Nova","789","Governador Valadares","MG","35022-000","ativo","Paula Soares","33998419422","Sobrinha",,"""2026-03-30T18:15:52.467Z"""
+"7","Dona Lurdes Ferreira","1942-05-30","F","444.555.666-77","33997654321","Centro","Rua Central","10","Governador Valadares","MG","35010-000","ativo","Roberto Ferreira","33997654322","Filho",,"""2026-03-30T18:15:52.467Z"""
+"8","Antônio Carlos Gomes","1950-09-14","M","555.666.777-88","33996543210","Bom Jardim","Rua das Acácias","55","Governador Valadares","MG","35025-000","ativo","Marta Gomes","33996543211","Esposa",,"""2026-03-30T18:15:52.467Z"""

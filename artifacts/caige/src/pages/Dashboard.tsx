@@ -1,9 +1,11 @@
 import { useGetDashboardStats, useGetDashboardActivities } from "@workspace/api-client-react";
+import type { DashboardStats, Activity as DashboardActivity } from "@workspace/api-client-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, UserCircle, Activity, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { unwrapArray, unwrapData } from "@/lib/response";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -12,6 +14,12 @@ export default function Dashboard() {
   const { data: stats, isLoading: statsLoading } = useGetDashboardStats();
   const { data: activities, isLoading: actsLoading } = useGetDashboardActivities();
 
+  const normalizedStats = unwrapData<DashboardStats>(stats);
+  const normalizedActivities = unwrapArray<DashboardActivity>(
+    activities,
+    "activities",
+  );
+
   if (statsLoading || actsLoading) {
     return <div className="animate-pulse space-y-8">
       <div className="h-10 bg-slate-200 rounded w-1/3"></div>
@@ -19,7 +27,7 @@ export default function Dashboard() {
     </div>;
   }
 
-  const s = stats ?? {
+  const s = normalizedStats ?? {
     totalIdosos: 0,
     profissionaisEnvolvidos: 0,
     atendimentosEmAndamento: 0,
@@ -29,7 +37,7 @@ export default function Dashboard() {
     satisfacao: 0,
   };
 
-  const a = Array.isArray(activities) ? activities : [];
+  const a = normalizedActivities;
 
   return (
     <div className="space-y-8">

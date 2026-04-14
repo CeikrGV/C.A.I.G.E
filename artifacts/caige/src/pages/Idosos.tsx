@@ -1,14 +1,16 @@
 import { useListIdosos } from "@workspace/api-client-react";
+import type { Idoso } from "@workspace/api-client-react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Plus, ChevronDown } from "lucide-react";
 import { formatPhone } from "@/lib/utils";
+import { unwrapArray } from "@/lib/response";
 
 export default function IdososList() {
   const { data: idosos, isLoading } = useListIdosos();
 
-  const items = Array.isArray(idosos) ? idosos : [];
+  const items = unwrapArray<Idoso>(idosos, "idosos");
 
   return (
     <div className="space-y-6">

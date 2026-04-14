@@ -1,0 +1,8 @@
+"id","nome","email","senha","iniciais","criado_em","papel","matricula","turma"
+"2","Prof. Carlos Mendes","caige@univale.br","caige123","CM","""2026-03-30T18:15:52.451Z""","professor",,
+"3","Prof. Ana Beatriz","ana.beatriz@univale.br","caige123","AB","""2026-03-30T18:15:52.451Z""","professor",,
+"4","João Pedro Silva","joao.pedro@univale.br","aluno123","JP","""2026-03-30T18:15:52.451Z""","aluno","20210001","Fisioterapia 3A"
+"5","Maria Fernanda Costa","maria.fernanda@univale.br","aluno123","MF","""2026-03-30T18:15:52.451Z""","aluno","20210002","Fisioterapia 3A"
+"6","Lucas Henrique Souza","lucas.henrique@univale.br","aluno123","LH","""2026-03-30T18:15:52.451Z""","aluno","20210003","Enfermagem 2B"
+"7","Ana Luiza Martins","ana.luiza@univale.br","aluno123","AL","""2026-03-30T18:15:52.451Z""","aluno","20210004","Enfermagem 2B"
+"8","Pedro Augusto Lima","pedro.augusto@univale.br","aluno123","PA","""2026-03-30T18:15:52.451Z""","aluno","20210005","Fisioterapia 3A"
