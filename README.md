@@ -30,14 +30,14 @@ pnpm dev:all
 
 * Backend (API): http://localhost:3001
 
-👥 Perfis de Acesso
+## 👥 Perfis de Acesso
 O sistema possui controle de rotas e visibilidade baseado no perfil do usuário:
 
 * Professor: Acesso total a painéis de gestão, visualização de todos os alunos e controle completo de prontuários.
 
 * Aluno: Acesso focado no registro de atividades, agenda própria e gerenciamento de pacientes vinculados.
 
-🔐 Credenciais de Teste
+## 🔐 Credenciais de Teste
 Para acessar e avaliar o sistema no ambiente de desenvolvimento, utilize as credenciais padrão geradas pelo script de seed:
 
 Acesso Professor (Visão Completa):
