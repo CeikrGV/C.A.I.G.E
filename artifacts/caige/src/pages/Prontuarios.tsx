@@ -65,7 +65,7 @@ export default function ProntuariosList() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Prontuários</h1>
-          <p className="text-slate-500 mt-1">Histórico clínico e atendimentos dos idosos</p>
+          <p className="text-slate-500 mt-1">Histórico clínico e atendimentos dos pacientes</p>
         </div>
         <Button onClick={() => setIsModalOpen(true)} className="gap-2 shadow-lg shadow-blue-500/25">
           <Plus className="w-5 h-5" /> Novo Prontuário

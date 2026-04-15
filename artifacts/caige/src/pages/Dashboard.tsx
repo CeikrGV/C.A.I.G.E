@@ -60,7 +60,7 @@ export default function Dashboard() {
                 </span>
               </div>
               <h3 className="text-4xl font-bold text-slate-900 mb-1">{s.totalIdosos}</h3>
-              <p className="font-semibold text-slate-700 text-sm">Total de Idosos Atendidos</p>
+              <p className="font-semibold text-slate-700 text-sm">Total de Pacientes Atendidos</p>
               <p className="text-slate-400 text-xs mt-1">Pacientes cadastrados no sistema</p>
             </CardContent>
           </Card>

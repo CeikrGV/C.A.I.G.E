@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 
 const alunoNavItems = [
   { href: "/", label: "Dashboard", icon: Home },
-  { href: "/idosos", label: "Idosos Cadastrados", icon: Users },
+  { href: "/idosos", label: "Pacientes Cadastrados", icon: Users },
   { href: "/prontuarios", label: "Prontuários", icon: FileText },
   { href: "/agenda", label: "Agenda", icon: Calendar },
   { href: "/frequencia", label: "Minha Frequência", icon: ClipboardList },
@@ -15,7 +15,7 @@ const alunoNavItems = [
 
 const professorNavItems = [
   { href: "/", label: "Dashboard", icon: Home },
-  { href: "/idosos", label: "Idosos Cadastrados", icon: Users },
+  { href: "/idosos", label: "Pacientes Cadastrados", icon: Users },
   { href: "/prontuarios", label: "Prontuários", icon: FileText },
   { href: "/agenda", label: "Agenda", icon: Calendar },
   { href: "/frequencia", label: "Frequência", icon: ClipboardList },

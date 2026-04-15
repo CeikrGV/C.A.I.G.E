@@ -94,7 +94,7 @@ export default function IdosoPerfil() {
   return (
     <div className="space-y-6 max-w-5xl">
       <div className="flex items-center text-sm font-medium text-slate-500 mb-2">
-        <Link href="/idosos" className="hover:text-primary transition-colors">Idosos Cadastrados</Link>
+        <Link href="/idosos" className="hover:text-primary transition-colors">Pacientes Cadastrados</Link>
         <span className="mx-2">›</span>
         <span className="text-slate-900">{idoso.nome}</span>
       </div>
